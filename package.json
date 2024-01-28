@@ -2,9 +2,10 @@
   "name": "employee-tracker-application",
   "version": "1.0.0",
   "description": "",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start":"node index.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,8 @@
   },
   "homepage": "https://github.com/manasavijay09/EMPLOY-TRACKER-APPLICATION#readme",
   "dependencies": {
+    "console.table": "^0.10.0",
+    "dotenv": "^16.4.1",
     "inquirer": "^8.2.4",
     "mysql2": "^3.9.0"
   }
