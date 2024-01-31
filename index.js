@@ -28,7 +28,7 @@ function startMenu() {
       type: "list",
       name: "options",
       message: "What would you like to do?",
-      choices: ["View all Department", "Add Department", "Exit App", "view All Roles", "view All Employees", "update Employee Role"]
+      choices: ["View all Department", "view All Roles", "view All Employees", "Add Department","Add Role","Add an employ", "update Employee Role","Exit App"]
     }
   ]).then(({ options }) => {
     switch (options) {
@@ -44,15 +44,16 @@ function startMenu() {
       case "Add Department":
         addDepartment();
         break;
+        case "Add  Role":
+        addRole();
+        break;
+        case "Add an employ":
+          addRole();
+          break;
         case "update employee role":
           updateEmployeeRole();
         break;
-
-
-
-
-
-      default:
+        default:
         db.end();
         process.exit(0)
     }
@@ -127,7 +128,52 @@ function addRole() {
         type: "list",
         name: "department_id",
         message: "Select Department for this role?",
-        choices: department_list
+        choices: "department_list"
+      }
+    ]).then(({ department_name }) => {
+      db.query("INSERT INTO department(name) VALUES(?);", [department_name], function (err, data) {
+        if (err) throw err;
+        console.table(data);
+        startMenu()
+      })
+    })
+  })
+}
+
+function AddanEmploy() {
+
+  db.query("SELECT * FROM role;", function (err, data) {
+    if (err) throw err;
+    let department_list = []
+    for (let i = 0; i < data.length; i++) {
+      department_list.push({
+        name: data[i].name,
+        value: data[i].id
+      })
+    }
+
+
+    inquirer.prompt([
+      {
+        type: "input",
+        name: "firstname",
+        message: "Enter First Name?"
+      },
+      {
+        type: "input",
+        name: "lastname",
+        message: "Enter Last name?"
+      },
+      {
+        type: "input",
+        name: "salary",
+        message: "Enter Salary for Role?"
+      },
+      {
+        type: "list",
+        name: "department_id",
+        message: "Select Department for this role?",
+        choices: "department_list"
       }
     ]).then(({ department_name }) => {
       db.query("INSERT INTO department(name) VALUES(?);", [department_name], function (err, data) {
