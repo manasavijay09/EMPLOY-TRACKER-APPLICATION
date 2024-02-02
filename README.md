@@ -28,3 +28,11 @@ WHEN I choose to add an employee
 THEN I am prompted to enter the employee’s first name, last name, role, and manager, and that employee is added to the database
 WHEN I choose to update an employee role
 THEN I am prompted to select an employee to update and their new role and this information is updated in the database 
+
+
+
+CONTACT:--
+-------------
+
+Github link:https://github.com/manasavijay09/EMPLOY-TRACKER-APPLICATION
+Screen Castify video link: https://drive.google.com/file/d/1yZMv2vH7M4JGJ_xVhAmsbu9FChJ8eoOV/view
