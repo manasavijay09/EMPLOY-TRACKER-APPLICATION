@@ -21,39 +21,39 @@ const db = mysql.createConnection(
 
 );
 
-
+//prompt questions
 function startMenu() {
   inquirer.prompt([
     {
       type: "list",
       name: "options",
       message: "What would you like to do?",
-      choices: ["View all Department", "view All Roles", "view All Employees", "Add Department","Add Role","Add an employ", "update Employee Role","Exit App"]
+      choices: ["view all Department", "view All Roles", "view All Employees", "add Department", "add Role", "add An Employee", "update Employee Role", "Exit App"]
     }
   ]).then(({ options }) => {
     switch (options) {
-      case "View all Department":
-        viewDepartment();
+      case "view All Department":
+        viewAllDepartment();
         break;
-      case "view all Roles":
+      case "view All Roles":
         viewAllRoles();
         break;
-      case "view all employees":
+      case "view All Employees":
         viewAllEmployees();
         break;
-      case "Add Department":
+      case "add Department":
         addDepartment();
         break;
-        case "Add  Role":
+      case "add  Role":
         addRole();
         break;
-        case "Add an employ":
-          addRole();
-          break;
-        case "update employee role":
-          updateEmployeeRole();
+      case "add An Employee":
+        addAnEmployee();
         break;
-        default:
+      case "update Employee Role":
+        updateEmployeeRole();
+        break;
+      default:
         db.end();
         process.exit(0)
     }
@@ -61,7 +61,8 @@ function startMenu() {
 }
 
 
-function viewDepartment() {
+function viewAllDepartment() {
+  console.log("department")
   db.query("SELECT * FROM department;", function (err, data) {
     if (err) throw err;
     console.table(data);
@@ -76,6 +77,7 @@ function viewAllRoles() {
     startMenu()
   })
 }
+
 function viewAllEmployees() {
   db.query("SELECT * FROM employee;", function (err, data) {
     if (err) throw err;
@@ -131,59 +133,15 @@ function addRole() {
         choices: "department_list"
       }
     ]).then(({ department_name }) => {
-      db.query("INSERT INTO department(name) VALUES(?);", [department_name], function (err, data) {
+      db.query("INSERT INTO role(name) VALUES(? );", title,salary,department_list, function (err, data) {
         if (err) throw err;
         console.table(data);
         startMenu()
-      })
-    })
-  })
+      });
+    });
+  });
 }
 
-function AddanEmploy() {
-
-  db.query("SELECT * FROM role;", function (err, data) {
-    if (err) throw err;
-    let department_list = []
-    for (let i = 0; i < data.length; i++) {
-      department_list.push({
-        name: data[i].name,
-        value: data[i].id
-      })
-    }
-
-
-    inquirer.prompt([
-      {
-        type: "input",
-        name: "firstname",
-        message: "Enter First Name?"
-      },
-      {
-        type: "input",
-        name: "lastname",
-        message: "Enter Last name?"
-      },
-      {
-        type: "input",
-        name: "salary",
-        message: "Enter Salary for Role?"
-      },
-      {
-        type: "list",
-        name: "department_id",
-        message: "Select Department for this role?",
-        choices: "department_list"
-      }
-    ]).then(({ department_name }) => {
-      db.query("INSERT INTO department(name) VALUES(?);", [department_name], function (err, data) {
-        if (err) throw err;
-        console.table(data);
-        startMenu()
-      })
-    })
-  })
-}
 
 
 startMenu();
